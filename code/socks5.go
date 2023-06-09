@@ -2,7 +2,7 @@
  * @Author: Frank Chu
  * @Date: 2023-03-18 11:20:31
  * @LastEditors: Frank Chu
- * @LastEditTime: 2023-03-19 20:22:52
+ * @LastEditTime: 2023-03-20 21:22:25
  * @FilePath: /go-socks5/code/socks5.go
  * @Description: 【Go语言手写SOCKS5服务器-05-编写认证过程】 https://www.bilibili.com/video/BV15Y411c7SU/?share_source=copy_web&vd_source=bf4952280cde801b178268abc99a7047
  *
@@ -48,6 +48,8 @@ func (s *SOCKS5Server) Run() error {
 
 	// Listen specific address
 	// Listen announces on the local network address.
+	// What's socket https://www.bilibili.com/video/BV12A411X7gY
+	// Socket Bind -> Listen -> Accept
 	listener, err := net.Listen("tcp", address)
 	if err != nil {
 		return err
@@ -56,6 +58,7 @@ func (s *SOCKS5Server) Run() error {
 
 	for {
 		// Connect Success, three-way handshake
+		// client connect, server accept
 		conn, err2 := listener.Accept()
 		log.Printf("Connecting Success")
 		if err2 != nil {
